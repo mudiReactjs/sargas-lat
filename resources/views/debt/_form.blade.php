@@ -119,11 +119,12 @@
     function getLocation()
     {
         $.ajax({
-            url: "{{route('location.get')}}",
+            url: "http://sargas.test/api/debt/form",
             type: 'get',
             dataType: 'json',
             success: function(response) {
-                $.each(response.locations, function(key, value) {
+                var locations = response['data'];
+                $.each(locations, function(key, value) {
                     $('#selectLocation').append(
                         "<option value='"+value.id+"'>"+value.name+"</option>"
                     );
@@ -246,13 +247,13 @@
 
             var id = $(this).val();
             $.ajax({
-            url: "{{route('fishermen.get')}}" ,
-            type: 'get',
+            url: "http://sargas.test/api/debt/filter-fishermen" ,
+            type: 'post',
             data: {id : id},
             success:function(response)
                 {
 
-                    var fishermen = response.fishermen;
+                    var fishermen = response['data'];
                     var html = "";
 
                     if (fishermen.length > 0) {
@@ -265,7 +266,6 @@
                                             </div>\
                                         </div>\
                                     </div>"
-
                         }
 
                     } else {
@@ -279,8 +279,6 @@
                             $('#infoTanggungan').html("");
                     }
                     $('#getFishermen').html(html);
-
-
                 }
             });
         });

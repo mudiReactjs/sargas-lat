@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MasterTransaksiOperasionalController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\TransaksiOperasionalController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,8 @@ Route::prefix('transactions')->group(function() {
 });
 
 Route::prefix('debt')->group(function() {
-    Route::get('/form', [DebtController::class, 'index']);
+    Route::get('/form', [DebtController::class, 'form']);
+    Route::post('/filter-fishermen', [DebtController::class, 'filter_fishermen']);
     // Kasbon
     Route::get('/create/{fishermen_id}', [DebtController::class, 'create']);
     Route::post('/store/{fishermen_id}', [DebtController::class, 'store']);
@@ -53,5 +55,7 @@ Route::prefix('debt')->group(function() {
 });
 
 Route::resource('/master-transaksi-operasional', MasterTransaksiOperasionalController::class);
-Route::post('/transaksi-operasional/store', [TransaksiOperasionalController::class, 'store']);
 
+// Transaksi Operasional
+Route::get('/transaksi-operasional/form', [TransaksiOperasionalController::class, 'form']);
+Route::post('/transaksi-operasional/store', [TransaksiOperasionalController::class, 'store']);
